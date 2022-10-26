@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show Random Receipes</title>
+    <link rel="stylesheet" href="./CSS/Navbar.css">
+</head>
+
+<body>
+    <div id="NavBar"></div>
+    <h1>Random Receipes</h1>
+    <div id="displayRecipes"></div>
+</body>
+
+</html>
+<script type="module">
+    // Navbar
+    let NavBar = document.getElementById("NavBar");
+    import navbarMeals from './Components/Navbar.js'
+    // console.log('navbarMeals:', navbarMeals())
+    NavBar.innerHTML = navbarMeals(); 
+</script>
+<script type="module">
+    //get Random Meals
+    import { getData, append } from "./scripts/fetchAppend.js";
+    let str = ["b", "f", "e", "j", "n", "c", "h", "j", "l", "m", "p", "s", "t", "y"]
+    var num = Math.ceil(Math.random() * (str.length - 1))
+    console.log('num:', num)
+    var random = str[num]
+    let res = await getData(`https://www.themealdb.com/api/json/v1/1/search.php?f=${random}`);
+    console.log('res:', res);
+    append(res.meals, displayRecipes)
+</script>

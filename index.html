@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="stylesheet" href="./CSS/Navbar.css">
+    <link rel="stylesheet" href="./CSS/getreceipe.css">
+</head>
+<style>
+    #search {
+        /* background-color: aqua; */
+        text-align: center;
+        margin-bottom: 10px;
+        display: flex;
+        justify-content: center;
+    }
+
+    #query {
+        padding: 10px 20px;
+        font-size: 20px;
+        width: 400px;
+        border-top-left-radius: 18px;
+        border-bottom-left-radius: 18px;
+    }
+
+    #query+button {
+        padding: 6px 20px;
+        font-size: 20px;
+        margin-left: -4px;
+        border-top-right-radius: 18px;
+        border-bottom-right-radius: 18px;
+        background-color: brown;
+        font-size: 25px;
+        font-weight: bold;
+    }
+</style>
+
+<body>
+
+    <body>
+        <div id="NavBar"></div>
+        <h1>Search Receipe by Name</h1>
+        <div id="search">
+            <input type="text" oninput="debounce(main,1000)" id="query" placeholder="Search for a Meals...">
+            <button onclick="getData()">Search</button>
+        </div>
+        <div id="displayRecipes"></div>
+    </body>
+
+</html>
+<script type="module">
+    // Navbar
+    let NavBar = document.getElementById("NavBar");
+    import navbarMeals from './Components/Navbar.js'
+    // console.log('navbarMeals:', navbarMeals())
+    NavBar.innerHTML = navbarMeals(); 
+</script>
+<script>
+    //search Meals over here
+    // import { append } from "./scripts/appendData.js";
+    var data;
+    var id;
+    let displayRecipes = document.getElementById("displayRecipes");
+    async function main() {
+        try {
+            let query = document.getElementById("query").value;
+            console.log('query:', query);
+            let res = await fetch(`https://www.themealdb.com/api/json/v1/1/search.php?s=${query}`)
+            // console.log('res:', res);
+            let data = await res.json();
+            console.log('data:', data);
+            // append(data.meals, displayRecipes);
+            append(data);
+        }
+        catch {
+            console.log(err)
+        }
+    }
+    function append(data) {
+        displayRecipes.innerHTML = null;
+        data.meals.forEach(({ strMeal, strMealThumb }) => {
+            console.log('strMeal,strMealThumb:', strMeal, strMealThumb)
+            let div = document.createElement('div');
+            let p = document.createElement('p');
+            let img = document.createElement('img');
+            p.innerText = strMeal;
+            img.src = strMealThumb;
+            div.append(img, p);
+            displayRecipes.append(div);
+        })
+    }
+    function debounce(func, delay) {
+        if (id) {
+            clearInterval(id);
+        }
+        id = setTimeout(() => {
+            func();
+        }, delay);
+    }
+
+    
+    let usernameDisplay = JSON.parse(localStorage.getItem("username"));
+    let userDisplay = document.getElementById("userDisplay");
+    console.log('userDisplay:', userDisplay.innerHTML)
+    console.log('usernameDisplay:', usernameDisplay)
+    userDisplay.innerHTML = "ASHISH"
+</script>
+<script type="module">
+    //get Random Meals
+    import { getData, append } from "./scripts/fetchAppend.js";
+    let str = ["a", "d", "e", "j", "n", "o", "h", "v", "a"]
+    var num = Math.ceil(Math.random() * (str.length - 1))
+    console.log('num:', num)
+    var random = str[num]
+    let res = await getData(`https://www.themealdb.com/api/json/v1/1/search.php?f=${random}`);
+    console.log('res:', res);
+    append(res.meals, displayRecipes)
+</script>

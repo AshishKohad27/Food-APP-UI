@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign up</title>
+    <link rel="stylesheet" href="./CSS/Navbar.css" />
+    <link rel="stylesheet" href="./CSS/SignupLogin.css" />
+</head>
+<style>
+    #formsignup {
+        width: 400px;
+        margin: auto;
+        text-align: center;
+        padding: 20px;
+        box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px,
+            rgba(6, 24, 44, 0.65) 0px 4px 6px -1px,
+            rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+        border-radius: 20px;
+        border: 3px solid brown;
+    }
+
+    #formsignup>input {
+        width: 350px;
+        margin-top: 10px;
+        padding: 6px;
+        font-size: 16px;
+        padding-left: 10px;
+        border: 0px;
+        border-radius: 10px;
+        background-color: burlywood;
+    }
+
+    #signup_btn:hover {
+        background-color: brown;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+    }
+</style>
+
+<body>
+    <div id="NavBar"></div>
+    <h1>Sign up</h1>
+    <form id="formsignup">
+        <input type="text" id="name" placeholder="Name" />
+        <input type="email" id="email" placeholder="Email" />
+        <input type="text" id="username" placeholder="Username" />
+        <input type="text" id="passward" placeholder="Passward" />
+        <input type="submit" id="signup_btn" />
+    </form>
+</body>
+
+</html>
+<script type="module">
+    // Navbar
+    let NavBar = document.getElementById("NavBar");
+    import navbarMeals from "./Components/Navbar.js";
+    // console.log('navbarMeals:', navbarMeals())
+    NavBar.innerHTML = navbarMeals();
+</script>
+<script src="./JS/signup.js"></script>

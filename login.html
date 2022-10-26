@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="./CSS/Navbar.css">
+    <link rel="stylesheet" href="./CSS/SignupLogin.css">
+</head>
+<style>
+    #formlogin {
+        width: 400px;
+        margin: auto;
+        text-align: center;
+        padding: 20px;
+        box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px,
+            rgba(6, 24, 44, 0.65) 0px 4px 6px -1px,
+            rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+        border-radius: 20px;
+        border: 3px solid brown;
+    }
+
+    #formlogin>input {
+        width: 350px;
+        margin-top: 10px;
+        padding: 6px;
+        font-size: 16px;
+        padding-left: 10px;
+        border: 0px;
+        border-radius: 10px;
+        background-color: burlywood;
+    }
+
+    #login_btn:hover {
+        background-color: brown;
+        font-size: 20px;
+        font-weight: bold;
+        color: white;
+    }
+</style>
+
+<body>
+    <div id="NavBar"></div>
+    <h1>Login</h1>
+    <form id="formlogin">
+        <input type="text" id="username" placeholder="Username">
+        <input type="text" id="passward" placeholder="Passward">
+        <input type="submit" id="login_btn">
+    </form>
+</body>
+
+</html>
+<script type="module">
+    // Navbar
+    let NavBar = document.getElementById("NavBar");
+    import navbarMeals from './Components/Navbar.js'
+    // console.log('navbarMeals:', navbarMeals())
+    NavBar.innerHTML = navbarMeals(); 
+</script>
+<script>
+
+    getDetails = JSON.parse(localStorage.getItem("details")) || [];
+    console.log('getDetails:', getDetails)
+    document.getElementById("formlogin").addEventListener("submit", loginBtn);
+
+    function loginBtn(event) {
+        event.preventDefault();
+        console.log("formsignup");
+        let username = document.getElementById("username").value;
+        let passward = document.getElementById("passward").value;
+
+        for (let i = 0; i < getDetails.length; i++) {
+            if (getDetails[i].username === username && getDetails[i].passward === passward) {
+                alert(`Your are Successfully Login`);
+                localStorage.setItem("username", JSON.stringify(getDetails[i].username))
+
+            } else {
+                alert("%c Sorry we can't find an account with this email address.Please try again or create a new Login Deatils",
+                    "color:red")
+            }
+        }
+        document.getElementById("username").value="";
+        document.getElementById("passward").value="";
+    }
+
+
+
+
+
+</script>
